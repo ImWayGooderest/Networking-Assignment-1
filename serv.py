@@ -21,7 +21,7 @@ def recvAll(sock, numBytes):
 	while len(recvBuff) < numBytes:
 
 		# Attempt to receive bytes
-		tmpBuff =  sock.recv(numBytes).decode('ascii')  #had to add.decode for it to work
+		tmpBuff =  sock.recv(numBytes).decode('ascii')  #had to add .decode for it to work
 
 		# The other side has closed the socket
 		if not tmpBuff:
@@ -35,8 +35,6 @@ def recvAll(sock, numBytes):
 
 
 def put(fileName, dataSock):
-
-
 	# The buffer to all data received from the
 	# the client.
 	fileData = ""
@@ -58,6 +56,9 @@ def put(fileName, dataSock):
 	print(fileName,"received.")
 	print("The file data is: ")
 	print(fileData)
+	f = open(fileName, 'w')
+	f.write(fileData)
+	print(fileName, "has been saved.")
 
 def get(fileName, dataSock):
 	fileObj = open(fileName, "r")

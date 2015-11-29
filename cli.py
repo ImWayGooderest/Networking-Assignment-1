@@ -20,7 +20,7 @@ def recvAll(sock, numBytes):
 	while len(recvBuff) < numBytes:
 
 		# Attempt to receive bytes
-		tmpBuff =  sock.recv(numBytes).decode('ascii')  #had to add.decode for it to work
+		tmpBuff =  sock.recv(numBytes).decode('ascii')  #had to add .decode for it to work
 
 		# The other side has closed the socket
 		if not tmpBuff:
@@ -36,13 +36,8 @@ def recvAll(sock, numBytes):
 def getEphemeralSock():
 	# Create a socket
 	welcomeSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 	# Bind the socket to port 0
 	welcomeSocket.bind(('',0))
-
-	# Retreive the ephemeral port number
-	print("I chose ephemeral port: ", welcomeSocket.getsockname()[1])
-
 	return welcomeSocket
 
 
@@ -98,6 +93,9 @@ def get(dataSock, fileName):
 	print("The file data is: ")
 	print(fileData)
 	dataSock.close()
+	f = open(fileName, 'w')
+	f.write(fileData)
+	print(fileName, "has been saved.")
 
 def ls(dataSock):
 	fileData = ""
@@ -107,7 +105,6 @@ def ls(dataSock):
 	fileSizeBuff = recvAll(dataSock, 10)
 	fileSize = int(fileSizeBuff)
 	fileData = recvAll(dataSock, fileSize)
-	print("The file data is: ")
 	print(fileData)
 	dataSock.close()
 
