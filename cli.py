@@ -20,7 +20,7 @@ def recvAll(sock, numBytes):
 	while len(recvBuff) < numBytes:
 
 		# Attempt to receive bytes
-		tmpBuff =  sock.recv(numBytes).decode('ascii')  #had to add .decode for it to work
+		tmpBuff =  sock.recv(numBytes).decode('utf-8')  #had to add .decode for it to work
 
 		# The other side has closed the socket
 		if not tmpBuff:
@@ -70,7 +70,7 @@ def put(dataSock, fileName):
 			numSent = 0
 			# Send the data!
 			while len(fileData) > numSent:
-				numSent += dataSock.send(fileData.encode('ascii'))
+				numSent += dataSock.send(fileData.encode('utf-8'))
 		# The file has been read. We are done
 		else:
 			break
@@ -118,7 +118,7 @@ def sendCommand(commandString, connSock):
 	commandString = size + " " + commandString   #prepend size of command string
 	bytes_sent = 0
 	while bytes_sent < len(commandString):
-		bytes_sent += connSock.send(commandString.encode('ascii'))
+		bytes_sent += connSock.send(commandString.encode('utf-8'))
 
 
 
